@@ -84,6 +84,23 @@ Only http and https addresses without a username or password are accepted. Use t
 
 Reasoning models spend tokens on their thinking first. Increase the maximum token limit for the feature you are using.
 
+= How is Magnitude different from Ollama? =
+
+Both run open-weight models on your own computer and both offer an OpenAI-compatible API, so either can power AI features in WordPress. They are separate programs made by different companies, and each has its own WordPress connector plugin.
+
+* **Focus:** Magnitude is an inference engine that tunes itself for your specific hardware. Ollama has a large library of ready-to-pull models and also offers a cloud service.
+* **Speed:** Magnitude's own benchmarks report faster generation than llama.cpp on the hardware it tested. Results depend on your computer and model, so try both if speed matters to you.
+* **Default address:** This plugin uses `http://127.0.0.1:10100/inference`. The Ollama connector uses `http://localhost:11434`.
+* **Features in WordPress:** This plugin offers text generation, tool calling, structured JSON output, and image and audio input where the model supports them. The Ollama connector also offers image generation and embeddings, which Magnitude does not provide.
+
+= Which one should I use? =
+
+Use the one that matches the program you already run. If you need embeddings or image generation, choose the Ollama connector. If you use Magnitude, or want to try it, use this plugin.
+
+= Is this plugin related to the Ollama connector? =
+
+No. This is an independent plugin. It was inspired by the AI Provider for Ollama plugin and is not affiliated with Ollama, its makers, or the authors of that plugin.
+
 == Changelog ==
 
 = 0.1.0 =
