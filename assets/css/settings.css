@@ -1,0 +1,218 @@
+/**
+ * Styles for the Settings > Magnitude screen.
+ *
+ * Logical properties are used so the layout works in right-to-left languages.
+ * Colors have at least a 4.5:1 contrast ratio against their background.
+ */
+
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+----------------------------------------------------------------
+1.0 Layout
+2.0 Cards
+3.0 Status pill
+4.0 Address form
+5.0 Models
+6.0 Help
+7.0 Narrow screens
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+1.0 Layout
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-settings {
+	max-inline-size: 800px;
+}
+
+.devbridge-ai-provider-magnitude-intro {
+	margin-block: 8px 20px;
+	max-inline-size: 640px;
+	color: #50575e;
+	font-size: 14px;
+}
+
+.devbridge-ai-provider-magnitude-cards {
+	display: grid;
+	gap: 16px;
+}
+
+/*--------------------------------------------------------------
+2.0 Cards
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-card {
+	box-sizing: border-box;
+	padding: 20px 24px;
+	border: 1px solid #dcdcde;
+	border-radius: 8px;
+	background: #fff;
+}
+
+.devbridge-ai-provider-magnitude-card h2 {
+	margin: 0;
+	padding: 0;
+	font-size: 16px;
+	line-height: 1.4;
+}
+
+.devbridge-ai-provider-magnitude-card p {
+	margin-block: 8px 0;
+}
+
+.devbridge-ai-provider-magnitude-card form {
+	margin-block-start: 16px;
+}
+
+.devbridge-ai-provider-magnitude-card-header {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 8px 16px;
+}
+
+.devbridge-ai-provider-magnitude-meta {
+	color: #50575e;
+}
+
+.devbridge-ai-provider-magnitude-meta code {
+	word-break: break-all;
+}
+
+/*--------------------------------------------------------------
+3.0 Status pill
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-pill {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	padding: 2px 12px;
+	border-radius: 999px;
+	font-size: 12px;
+	font-weight: 600;
+	line-height: 20px;
+}
+
+.devbridge-ai-provider-magnitude-pill::before {
+	content: "";
+	inline-size: 8px;
+	block-size: 8px;
+	border-radius: 50%;
+	background: currentcolor;
+}
+
+.devbridge-ai-provider-magnitude-pill-ok {
+	background: #edfaef;
+	color: #005c12;
+}
+
+.devbridge-ai-provider-magnitude-pill-error {
+	background: #fcf0f1;
+	color: #8a2424;
+}
+
+/*--------------------------------------------------------------
+4.0 Address form
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-label {
+	display: block;
+	margin-block-end: 6px;
+	font-weight: 600;
+}
+
+.devbridge-ai-provider-magnitude-input {
+	inline-size: 100%;
+	max-inline-size: 480px;
+}
+
+.devbridge-ai-provider-magnitude-card .description {
+	margin-block: 6px 12px;
+}
+
+/*--------------------------------------------------------------
+5.0 Models
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-models {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	gap: 12px;
+	margin: 16px 0 12px;
+	padding: 0;
+	list-style: none;
+}
+
+.devbridge-ai-provider-magnitude-model {
+	display: flex;
+	flex-direction: column;
+	gap: 6px;
+	margin: 0;
+	padding: 12px 14px;
+	border: 1px solid #dcdcde;
+	border-radius: 6px;
+	background: #f6f7f7;
+}
+
+.devbridge-ai-provider-magnitude-model code {
+	background: transparent;
+	color: #50575e;
+	font-size: 12px;
+	word-break: break-all;
+}
+
+.devbridge-ai-provider-magnitude-badges {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+}
+
+.devbridge-ai-provider-magnitude-badge {
+	padding: 1px 8px;
+	border-radius: 999px;
+	background: #e0e0e0;
+	color: #1d2327;
+	font-size: 12px;
+	line-height: 18px;
+}
+
+.devbridge-ai-provider-magnitude-empty {
+	padding: 12px 14px;
+	border-radius: 6px;
+	background: #f6f7f7;
+	color: #50575e;
+}
+
+/*--------------------------------------------------------------
+6.0 Help
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-help summary {
+	cursor: pointer;
+	font-size: 14px;
+	font-weight: 600;
+}
+
+.devbridge-ai-provider-magnitude-help ol {
+	margin-block: 12px 0;
+	margin-inline-start: 20px;
+}
+
+.devbridge-ai-provider-magnitude-help li {
+	margin-block-end: 6px;
+}
+
+/*--------------------------------------------------------------
+7.0 Narrow screens
+--------------------------------------------------------------*/
+@media screen and (max-width: 600px) {
+
+	.devbridge-ai-provider-magnitude-card {
+		padding: 16px;
+	}
+
+	.devbridge-ai-provider-magnitude-models {
+		grid-template-columns: 1fr;
+	}
+
+	.devbridge-ai-provider-magnitude-card .button {
+		inline-size: 100%;
+		text-align: center;
+	}
+}
