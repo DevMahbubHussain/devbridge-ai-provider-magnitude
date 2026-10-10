@@ -1,0 +1,17 @@
+.git
+.gitignore
+.distignore
+CLAUDE.md
+phpcs.xml.dist
+phpstan.neon.dist
+phpunit.xml.dist
+composer.json
+composer.lock
+tests
+node_modules
+vendor
+*.zip
+README.md
+bin
+dist
+docs

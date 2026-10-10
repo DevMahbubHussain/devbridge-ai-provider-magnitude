@@ -1,0 +1,9 @@
+parameters:
+	level: 8
+	phpVersion:
+		min: 70400
+		max: 80400
+	paths:
+		- devbridge-ai-provider-magnitude.php
+		- includes/
+	treatPhpDocTypesAsCertain: false

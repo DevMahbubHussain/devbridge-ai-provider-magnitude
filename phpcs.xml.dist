@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<ruleset name="DevBridge AI Provider for Magnitude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/PHPCSStandards/PHP_CodeSniffer/master/phpcs.xsd">
+	<description>Coding standards for DevBridge AI Provider for Magnitude.</description>
+
+	<file>./devbridge-ai-provider-magnitude.php</file>
+	<file>./includes/</file>
+	<file>./tests/</file>
+
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+
+	<arg value="sp" />
+	<arg name="basepath" value="./" />
+	<arg name="colors" />
+	<arg name="extensions" value="php" />
+	<arg name="parallel" value="8" />
+
+	<config name="testVersion" value="7.4-" />
+	<config name="minimum_wp_version" value="7.0" />
+
+	<rule ref="WordPress-Extra">
+		<!-- PSR-4 file names (one class per file, file named after the class). -->
+		<exclude name="WordPress.Files.FileName" />
+		<!-- Type hints replace the short description on some inherited methods. -->
+		<exclude name="Generic.Commenting.DocComment.MissingShort" />
+	</rule>
+	<rule ref="WordPress-Docs" />
+
+	<rule ref="PHPCompatibilityWP" />
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="devbridge-ai-provider-magnitude" />
+			</property>
+		</properties>
+	</rule>
+
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<properties>
+			<property name="prefixes" type="array">
+				<element value="devbridge_ai_provider_magnitude" />
+				<element value="DEVBRIDGE_AI_PROVIDER_MAGNITUDE" />
+				<element value="DevBridgeAiProviderForMagnitude" />
+			</property>
+		</properties>
+	</rule>
+
+	<!-- Tests may use short test method names and stubs of WordPress functions. -->
+	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+	<rule ref="Squiz.Commenting.FunctionComment.Missing">
+		<exclude-pattern>*/tests/*</exclude-pattern>
+	</rule>
+</ruleset>
