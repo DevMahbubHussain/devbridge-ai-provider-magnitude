@@ -5,7 +5,7 @@
  * Description:       Text generation with tool calling and image input on supported models, running locally on your own computer with Magnitude.
  * Requires at least: 7.0
  * Requires PHP:      7.4
- * Version:           0.1.0
+ * Version:           0.2.0
  * Author:            Mahbub Hussain
  * License:           GPL-2.0-or-later
  * License URI:       https://spdx.org/licenses/GPL-2.0-or-later.html
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'DEVBRIDGE_AI_PROVIDER_MAGNITUDE_VERSION', '0.1.0' );
+define( 'DEVBRIDGE_AI_PROVIDER_MAGNITUDE_VERSION', '0.2.0' );
 define( 'DEVBRIDGE_AI_PROVIDER_MAGNITUDE_PLUGIN_FILE', __FILE__ );
 define( 'DEVBRIDGE_AI_PROVIDER_MAGNITUDE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
 

@@ -12,9 +12,9 @@ slug="devbridge-ai-provider-magnitude"
 root="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 main_file="${root}/${slug}.php"
 
-version="$(grep -E '^ \* Version:' "${main_file}" | head -1 | sed -E 's/^ \* Version:[[:space:]]*//')"
-stable_tag="$(grep -E '^Stable tag:' "${root}/readme.txt" | head -1 | sed -E 's/^Stable tag:[[:space:]]*//')"
-constant="$(grep -E "define\( 'DEVBRIDGE_AI_PROVIDER_MAGNITUDE_VERSION'" "${main_file}" | sed -E "s/.*', '([^']+)'.*/\1/")"
+version="$(grep -E '^ \* Version:' "${main_file}" | head -1 | sed -E 's/^ \* Version:[[:space:]]*//' | tr -d '\r')"
+stable_tag="$(grep -E '^Stable tag:' "${root}/readme.txt" | head -1 | sed -E 's/^Stable tag:[[:space:]]*//' | tr -d '\r')"
+constant="$(grep -E "define\( 'DEVBRIDGE_AI_PROVIDER_MAGNITUDE_VERSION'" "${main_file}" | sed -E "s/.*', '([^']+)'.*/\1/" | tr -d '\r')"
 
 if [[ -z "${version}" || "${version}" != "${stable_tag}" || "${version}" != "${constant}" ]]; then
 	echo "Version mismatch: header='${version}' readme stable tag='${stable_tag}' constant='${constant}'." >&2
