@@ -1,6 +1,7 @@
 .git
 .gitignore
 .distignore
+.gitattributes
 CLAUDE.md
 AGENTS.md
 AGENTS.MD
