@@ -3,7 +3,7 @@ Contributors:      mahbubwpwist
 Tags:              ai, magnitude, llm, local-ai, connector
 Requires at least: 7.0
 Tested up to:      7.1
-Stable tag:        0.1.0
+Stable tag:        0.2.0
 Requires PHP:      7.4
 License:           GPL-2.0-or-later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
@@ -27,7 +27,8 @@ This plugin is an independent project. It is not affiliated with, endorsed by, o
 * Automatic model discovery
 * Works without an API key for local servers
 * Appears under Settings > Connectors
-* A Settings > Magnitude screen shows the connection status, the running models and the server address
+* A Test Playground on Settings > Magnitude to try prompts on a running model, with adjustable temperature, top P and maximum tokens, an optional system instruction, and quick example prompts
+* A Settings > Magnitude screen shows the connection status, the running models, the server address and the Test Playground
 
 **Requirements:**
 
@@ -99,15 +100,19 @@ Use the one that matches the program you already run. If you need embeddings or 
 
 = What data does the Test Playground store? =
 
-* **Conversation history:** When testing models in the Test Playground on Settings > Magnitude, your multi-turn conversation thread is kept strictly in your own browser's local session storage (`sessionStorage`). It is never stored on the server or in the database. Choosing "Clear History" or closing the browser tab removes it immediately.
-* **Response cache:** Prompt completions are cached temporarily in WordPress transients on your server for up to 10 minutes to reduce local GPU and CPU load when testing. You can check "Bypass Cache" to skip cached results and generate fresh responses.
-* **Uninstall cleanup:** When the plugin is deleted, all saved options and temporary transients are completely purged from your database across single and multisite installs.
+* **Conversation history:** When testing models in the Test Playground on Settings > Magnitude, your multi-turn conversation thread is kept in your own browser's session storage (`sessionStorage`). It is not stored on the server or in the database. Choosing "Clear History" or closing the browser tab removes it.
+* **Response cache:** To reduce load on your computer while testing, the replies to Test Playground prompts are cached in WordPress transients on your server (in the database) for up to 10 minutes. You can check "Bypass Cache" to skip cached results and generate fresh responses.
+* **Uninstall cleanup:** When the plugin is deleted, its saved options and temporary transients are removed from your database, on single sites and on multisite.
 
 = Is this plugin related to the Ollama connector? =
 
 No. This is an independent plugin. It was inspired by the AI Provider for Ollama plugin and is not affiliated with Ollama, its makers, or the authors of that plugin.
 
 == Changelog ==
+
+= 0.2.0 =
+* New: Test Playground on Settings > Magnitude. Send a prompt to a running model, adjust temperature, top P and maximum tokens, add a system instruction, and use quick example prompts (joke, summary, JSON output).
+* New: Choose which running model to test, stop a request in progress, clear the conversation history, and bypass the response cache.
 
 = 0.1.0 =
 * Initial release.
