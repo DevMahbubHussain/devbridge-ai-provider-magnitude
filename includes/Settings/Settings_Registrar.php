@@ -86,7 +86,7 @@ final class Settings_Registrar implements Hook_Registrar {
 	public function register(): void {
 		add_action( 'admin_menu', array( $this, 'add_menu' ) );
 		add_action( 'admin_init', array( $this, 'register_setting' ) );
-		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_styles' ) );
+		add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_assets' ) );
 		add_action( 'admin_post_' . Settings_Page::CHECK_ACTION, array( $this, 'handle_check' ) );
 	}
 
@@ -156,13 +156,13 @@ final class Settings_Registrar implements Hook_Registrar {
 	}
 
 	/**
-	 * Loads the screen stylesheet on the settings screen only.
+	 * Loads the screen stylesheet and playground script on the settings screen only.
 	 *
-	 * @since 0.1.0
+	 * @since 0.2.0
 	 *
 	 * @param string $hook_suffix The current admin page.
 	 */
-	public function enqueue_styles( $hook_suffix ): void {
+	public function enqueue_assets( $hook_suffix ): void {
 		if ( 'settings_page_' . Settings_Page::SLUG !== $hook_suffix ) {
 			return;
 		}
@@ -173,6 +173,46 @@ final class Settings_Registrar implements Hook_Registrar {
 			array(),
 			DEVBRIDGE_AI_PROVIDER_MAGNITUDE_VERSION
 		);
+
+		wp_enqueue_script(
+			'devbridge-ai-provider-magnitude-playground',
+			plugins_url( 'assets/js/playground.js', $this->plugin_file ),
+			array(),
+			DEVBRIDGE_AI_PROVIDER_MAGNITUDE_VERSION,
+			true
+		);
+
+		wp_localize_script(
+			'devbridge-ai-provider-magnitude-playground',
+			'devbridgeMagnitudePlayground',
+			array(
+				'restUrl' => esc_url_raw( rest_url( 'devbridge-ai-provider-magnitude/v1/playground/generate' ) ),
+				'nonce'   => wp_create_nonce( 'wp_rest' ),
+				'strings' => array(
+					'send'         => __( 'Send prompt', 'devbridge-ai-provider-magnitude' ),
+					'sending'      => __( 'Generating...', 'devbridge-ai-provider-magnitude' ),
+					'stop'         => __( 'Stop', 'devbridge-ai-provider-magnitude' ),
+					'errorGeneric' => __( 'An error occurred during generation.', 'devbridge-ai-provider-magnitude' ),
+					'clearConfirm' => __( 'Are you sure you want to clear conversation history?', 'devbridge-ai-provider-magnitude' ),
+					'copySuccess'  => __( 'Copied to clipboard!', 'devbridge-ai-provider-magnitude' ),
+					'cachedBadge'  => __( 'Cached', 'devbridge-ai-provider-magnitude' ),
+					'networkError' => __( 'Network or connection error.', 'devbridge-ai-provider-magnitude' ),
+				),
+			)
+		);
+	}
+
+	/**
+	 * Loads the screen stylesheet on the settings screen only.
+	 *
+	 * Kept for backwards compatibility.
+	 *
+	 * @since 0.1.0
+	 *
+	 * @param string $hook_suffix The current admin page.
+	 */
+	public function enqueue_styles( $hook_suffix ): void {
+		$this->enqueue_assets( $hook_suffix );
 	}
 
 	/**

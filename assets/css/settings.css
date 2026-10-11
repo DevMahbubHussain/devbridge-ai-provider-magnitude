@@ -1,6 +1,7 @@
 /**
  * Styles for the Settings > Magnitude screen.
  *
+ * Uses WordPress admin typography, 2-column responsive layout, and centered container.
  * Logical properties are used so the layout works in right-to-left languages.
  * Colors have at least a 4.5:1 contrast ratio against their background.
  */
@@ -8,54 +9,93 @@
 /*--------------------------------------------------------------
 >>> TABLE OF CONTENTS:
 ----------------------------------------------------------------
-1.0 Layout
-2.0 Cards
-3.0 Status pill
-4.0 Address form
-5.0 Models
-6.0 Help
-7.0 Narrow screens
+1.0 Layout & Typography
+2.0 Two-Column Grid
+3.0 Cards
+4.0 Status Pill
+5.0 Form Controls
+6.0 Models Grid
+7.0 Playground Console
+8.0 Help Accordion
+9.0 Responsive Breakpoints
 --------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
-1.0 Layout
+1.0 Layout & Typography
 --------------------------------------------------------------*/
 .devbridge-ai-provider-magnitude-settings {
-	max-inline-size: 800px;
+	max-inline-size: 1200px;
+	margin-inline: auto;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #3c434a;
+}
+
+.devbridge-ai-provider-magnitude-header {
+	margin-block: 16px 20px;
+}
+
+.devbridge-ai-provider-magnitude-header h1 {
+	margin: 0 0 8px;
+	padding: 0;
+	font-size: 23px;
+	font-weight: 400;
+	line-height: 1.3;
+	color: #1d2327;
 }
 
 .devbridge-ai-provider-magnitude-intro {
-	margin-block: 8px 20px;
-	max-inline-size: 640px;
-	color: #50575e;
-	font-size: 14px;
-}
-
-.devbridge-ai-provider-magnitude-cards {
-	display: grid;
-	gap: 16px;
+	margin: 0;
+	max-inline-size: 800px;
+	color: #646970;
+	font-size: 13px;
+	line-height: 1.5;
 }
 
 /*--------------------------------------------------------------
-2.0 Cards
+2.0 Two-Column Grid
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-columns {
+	display: grid;
+	grid-template-columns: minmax(360px, 460px) minmax(420px, 1fr);
+	gap: 20px;
+	align-items: start;
+}
+
+.devbridge-ai-provider-magnitude-column {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+}
+
+/*--------------------------------------------------------------
+3.0 Cards
 --------------------------------------------------------------*/
 .devbridge-ai-provider-magnitude-card {
 	box-sizing: border-box;
 	padding: 20px 24px;
-	border: 1px solid #dcdcde;
-	border-radius: 8px;
+	border: 1px solid #c3c4c7;
+	border-radius: 4px;
 	background: #fff;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 }
 
 .devbridge-ai-provider-magnitude-card h2 {
 	margin: 0;
 	padding: 0;
-	font-size: 16px;
+	font-size: 14px;
+	font-weight: 600;
 	line-height: 1.4;
+	color: #1d2327;
 }
 
 .devbridge-ai-provider-magnitude-card p {
 	margin-block: 8px 0;
+	font-size: 13px;
+	line-height: 1.5;
+	color: #3c434a;
 }
 
 .devbridge-ai-provider-magnitude-card form {
@@ -71,25 +111,28 @@
 }
 
 .devbridge-ai-provider-magnitude-meta {
-	color: #50575e;
+	color: #646970;
+	font-size: 12px;
 }
 
 .devbridge-ai-provider-magnitude-meta code {
+	font-family: Consolas, Monaco, "Courier New", monospace;
+	font-size: 12px;
 	word-break: break-all;
 }
 
 /*--------------------------------------------------------------
-3.0 Status pill
+4.0 Status Pill
 --------------------------------------------------------------*/
 .devbridge-ai-provider-magnitude-pill {
 	display: inline-flex;
 	align-items: center;
 	gap: 6px;
-	padding: 2px 12px;
+	padding: 2px 10px;
 	border-radius: 999px;
 	font-size: 12px;
 	font-weight: 600;
-	line-height: 20px;
+	line-height: 18px;
 }
 
 .devbridge-ai-provider-magnitude-pill::before {
@@ -111,31 +154,57 @@
 }
 
 /*--------------------------------------------------------------
-4.0 Address form
+5.0 Form Controls
 --------------------------------------------------------------*/
 .devbridge-ai-provider-magnitude-label {
 	display: block;
-	margin-block-end: 6px;
+	margin-block: 14px 6px;
 	font-weight: 600;
+	font-size: 13px;
+	color: #1d2327;
 }
 
-.devbridge-ai-provider-magnitude-input {
+.devbridge-ai-provider-magnitude-label:first-of-type {
+	margin-block-start: 12px;
+}
+
+.devbridge-ai-provider-magnitude-input,
+.devbridge-ai-provider-magnitude-select,
+.devbridge-ai-provider-magnitude-textarea {
 	inline-size: 100%;
-	max-inline-size: 480px;
+	box-sizing: border-box;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+	font-size: 13px;
+	line-height: 1.4;
+	color: #2c3338;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	padding: 6px 10px;
+}
+
+.devbridge-ai-provider-magnitude-input:focus,
+.devbridge-ai-provider-magnitude-select:focus,
+.devbridge-ai-provider-magnitude-textarea:focus {
+	border-color: #2271b1;
+	box-shadow: 0 0 0 1px #2271b1;
+	outline: 2px solid transparent;
 }
 
 .devbridge-ai-provider-magnitude-card .description {
 	margin-block: 6px 12px;
+	font-size: 12px;
+	line-height: 1.4;
+	color: #646970;
 }
 
 /*--------------------------------------------------------------
-5.0 Models
+6.0 Models Grid
 --------------------------------------------------------------*/
 .devbridge-ai-provider-magnitude-models {
 	display: grid;
-	grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 	gap: 12px;
-	margin: 16px 0 12px;
+	margin: 14px 0 12px;
 	padding: 0;
 	list-style: none;
 }
@@ -145,27 +214,186 @@
 	flex-direction: column;
 	gap: 6px;
 	margin: 0;
-	padding: 12px 14px;
+	padding: 10px 12px;
 	border: 1px solid #dcdcde;
-	border-radius: 6px;
+	border-radius: 4px;
 	background: #f6f7f7;
+	font-size: 13px;
 }
 
 .devbridge-ai-provider-magnitude-model code {
 	background: transparent;
-	color: #50575e;
-	font-size: 12px;
+	color: #646970;
+	font-family: Consolas, Monaco, "Courier New", monospace;
+	font-size: 11px;
 	word-break: break-all;
 }
 
 .devbridge-ai-provider-magnitude-badges {
 	display: flex;
 	flex-wrap: wrap;
-	gap: 6px;
+	gap: 4px;
 }
 
 .devbridge-ai-provider-magnitude-badge {
-	padding: 1px 8px;
+	padding: 1px 6px;
+	border-radius: 999px;
+	background: #e0e0e0;
+	color: #1d2327;
+	font-size: 11px;
+	line-height: 16px;
+}
+
+.devbridge-ai-provider-magnitude-empty {
+	padding: 12px 14px;
+	border-radius: 4px;
+	background: #f6f7f7;
+	color: #646970;
+	font-size: 13px;
+}
+
+/*--------------------------------------------------------------
+7.0 Playground Console
+--------------------------------------------------------------*/
+.devbridge-ai-provider-magnitude-playground-header-actions {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.devbridge-playground-cache-toggle {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	font-size: 13px;
+	color: #50575e;
+	cursor: pointer;
+	margin: 0 !important;
+}
+
+.devbridge-playground-parameters {
+	margin-block: 14px 10px;
+	padding: 12px 14px;
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	inline-size: 100%;
+	box-sizing: border-box;
+}
+
+.devbridge-playground-parameters summary {
+	font-weight: 600;
+	font-size: 13px;
+	color: #1d2327;
+	cursor: pointer;
+}
+
+.devbridge-playground-controls-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+	gap: 12px;
+	margin-block-start: 12px;
+}
+
+.devbridge-playground-controls-grid label {
+	margin: 0 !important;
+	font-size: 12px;
+	color: #50575e;
+}
+
+.devbridge-playground-controls-grid input[type="range"] {
+	inline-size: 100%;
+	margin-block-start: 4px;
+	cursor: pointer;
+}
+
+.devbridge-playground-controls-grid input[type="number"] {
+	inline-size: 100%;
+	margin-block-start: 4px;
+	padding: 4px 6px;
+	border: 1px solid #8c8f94;
+	border-radius: 4px;
+	font-size: 13px;
+}
+
+.devbridge-playground-history {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	inline-size: 100%;
+	box-sizing: border-box;
+	margin-block: 14px 12px;
+	max-block-size: 300px;
+	overflow-y: auto;
+}
+
+.devbridge-playground-message {
+	padding: 10px 14px;
+	border-radius: 4px;
+	font-size: 13px;
+	line-height: 1.5;
+}
+
+.devbridge-playground-message-user {
+	background: #f0f6fc;
+	border: 1px solid #c8d8ea;
+	align-self: flex-end;
+	inline-size: 90%;
+}
+
+.devbridge-playground-message-assistant {
+	background: #f6f7f7;
+	border: 1px solid #dcdcde;
+	align-self: flex-start;
+	inline-size: 90%;
+}
+
+.devbridge-ai-provider-magnitude-playground-presets {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 6px;
+	margin-block: 10px 12px;
+}
+
+.devbridge-playground-actions {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	margin-block-start: 12px;
+}
+
+.devbridge-playground-actions .button-primary {
+	min-height: 32px;
+	padding: 0 14px;
+	font-size: 13px;
+}
+
+.devbridge-playground-actions .spinner {
+	float: none;
+	vertical-align: middle;
+	margin-block-start: 0;
+}
+
+.devbridge-ai-provider-magnitude-playground-output {
+	margin-block-start: 16px;
+	padding: 14px 16px;
+	border: 1px solid #dcdcde;
+	border-radius: 4px;
+	background: #f6f7f7;
+}
+
+.devbridge-ai-provider-magnitude-playground-stats {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-block-end: 10px;
+}
+
+.devbridge-ai-provider-magnitude-stat {
+	display: inline-flex;
+	align-items: center;
+	gap: 4px;
+	padding: 2px 8px;
 	border-radius: 999px;
 	background: #e0e0e0;
 	color: #1d2327;
@@ -173,15 +401,46 @@
 	line-height: 18px;
 }
 
-.devbridge-ai-provider-magnitude-empty {
+.devbridge-ai-provider-magnitude-playground-content {
+	max-block-size: 400px;
+	margin: 0;
 	padding: 12px 14px;
-	border-radius: 6px;
-	background: #f6f7f7;
-	color: #50575e;
+	border-radius: 4px;
+	background: #fff;
+	border: 1px solid #dcdcde;
+	font-family: Consolas, Monaco, "Courier New", monospace;
+	font-size: 13px;
+	line-height: 1.6;
+	overflow: auto;
+	white-space: pre-wrap;
+	word-break: break-word;
+}
+
+.devbridge-ai-reasoning {
+	margin-block-end: 10px;
+	padding: 8px 12px;
+	background: #f0f0f1;
+	border-inline-start: 3px solid #72aee6;
+	border-radius: 2px;
+	font-size: 12px;
+	color: #646970;
+}
+
+.devbridge-ai-reasoning summary {
+	cursor: pointer;
+	font-weight: 600;
+	margin-block-end: 4px;
+}
+
+.devbridge-ai-reasoning pre {
+	white-space: pre-wrap;
+	word-break: break-word;
+	margin: 0;
+	font-family: inherit;
 }
 
 /*--------------------------------------------------------------
-6.0 Help
+8.0 Help Accordion
 --------------------------------------------------------------*/
 .devbridge-ai-provider-magnitude-help summary {
 	cursor: pointer;
@@ -192,6 +451,8 @@
 .devbridge-ai-provider-magnitude-help ol {
 	margin-block: 12px 0;
 	margin-inline-start: 20px;
+	font-size: 13px;
+	line-height: 1.5;
 }
 
 .devbridge-ai-provider-magnitude-help li {
@@ -199,8 +460,15 @@
 }
 
 /*--------------------------------------------------------------
-7.0 Narrow screens
+9.0 Responsive Breakpoints
 --------------------------------------------------------------*/
+@media screen and (max-width: 960px) {
+
+	.devbridge-ai-provider-magnitude-columns {
+		grid-template-columns: 1fr;
+	}
+}
+
 @media screen and (max-width: 600px) {
 
 	.devbridge-ai-provider-magnitude-card {

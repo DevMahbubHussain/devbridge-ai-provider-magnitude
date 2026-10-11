@@ -48,7 +48,7 @@ WordPress Ecosystem
     * Round-trip inference latency (e.g., `1.42s`).
     * Token count and generation throughput estimation.
 * **Backend**:
-  * Dedicated WordPress REST API endpoint or admin AJAX action (`wp_ajax_devbridge_magnitude_test_prompt`).
+  * Dedicated WordPress REST API endpoint (project rule: REST only, no admin-ajax).
   * Nonce verification and capability check (`manage_options`).
   * Invokes `MagnitudeTextGenerationModel` directly through the AI Client registry.
 
@@ -75,7 +75,7 @@ WordPress Ecosystem
 * **Objective**: Eliminate full-page reloads when refreshing model status and display live connection latency.
 
 #### Technical Details:
-* Replace the `admin-post.php` form submission with a lightweight JavaScript fetch call (`admin-ajax.php` or REST API).
+* Replace the `admin-post.php` form submission with a lightweight JavaScript fetch call against a REST API endpoint (project rule: REST only, no admin-ajax).
 * Live status pill that shows:
   * Connection state (`Connected` / `Unreachable`).
   * Real-time HTTP ping / latency badge (e.g., `38 ms`).

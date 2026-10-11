@@ -110,20 +110,27 @@ final class Settings_Page {
 		$status = $this->inspector->inspect();
 		?>
 		<div class="wrap devbridge-ai-provider-magnitude-settings">
-			<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
-			<p class="devbridge-ai-provider-magnitude-intro">
-				<?php esc_html_e( 'Connect WordPress to Magnitude, an app that runs open-weight AI models on your own computer. Your prompts stay on your hardware.', 'devbridge-ai-provider-magnitude' ); ?>
-			</p>
+			<header class="devbridge-ai-provider-magnitude-header">
+				<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
+				<p class="devbridge-ai-provider-magnitude-intro">
+					<?php esc_html_e( 'Connect WordPress to Magnitude, an app that runs open-weight AI models on your own computer. Your prompts stay on your hardware.', 'devbridge-ai-provider-magnitude' ); ?>
+				</p>
+			</header>
 
 			<?php $this->render_checked_notice(); ?>
 
-			<div class="devbridge-ai-provider-magnitude-cards">
-				<?php
-				$this->render_status_card( $status );
-				$this->render_address_card();
-				$this->render_models_card( $status );
-				$this->render_remote_help();
-				?>
+			<div class="devbridge-ai-provider-magnitude-columns">
+				<div class="devbridge-ai-provider-magnitude-column devbridge-ai-provider-magnitude-column-config">
+					<?php
+					$this->render_status_card( $status );
+					$this->render_address_card();
+					$this->render_models_card( $status );
+					$this->render_remote_help();
+					?>
+				</div>
+				<div class="devbridge-ai-provider-magnitude-column devbridge-ai-provider-magnitude-column-playground">
+					<?php $this->render_playground_card( $status ); ?>
+				</div>
 			</div>
 		</div>
 		<?php
@@ -285,6 +292,115 @@ final class Settings_Page {
 			<p class="description">
 				<?php esc_html_e( 'Models are read from Magnitude. Only models that are running are listed.', 'devbridge-ai-provider-magnitude' ); ?>
 			</p>
+		</section>
+		<?php
+	}
+
+	/**
+	 * Renders the test playground card.
+	 *
+	 * @since 0.2.0
+	 *
+	 * @param Connection_Status $status The connection status.
+	 */
+	private function render_playground_card( Connection_Status $status ): void {
+		$connected = $status->is_connected();
+		$models    = $status->get_models();
+		?>
+		<section class="devbridge-ai-provider-magnitude-card devbridge-ai-provider-magnitude-playground" aria-labelledby="devbridge-ai-provider-magnitude-playground-title">
+			<div class="devbridge-ai-provider-magnitude-card-header">
+				<h2 id="devbridge-ai-provider-magnitude-playground-title"><?php esc_html_e( 'Test playground', 'devbridge-ai-provider-magnitude' ); ?></h2>
+				<?php if ( $connected && array() !== $models ) : ?>
+					<div class="devbridge-ai-provider-magnitude-playground-header-actions">
+						<button type="button" class="button button-secondary" id="devbridge-playground-clear"><?php esc_html_e( 'Clear History', 'devbridge-ai-provider-magnitude' ); ?></button>
+						<label class="devbridge-playground-cache-toggle">
+							<input type="checkbox" id="devbridge-playground-bypass-cache" />
+							<?php esc_html_e( 'Bypass Cache', 'devbridge-ai-provider-magnitude' ); ?>
+						</label>
+					</div>
+				<?php endif; ?>
+			</div>
+
+			<?php if ( ! $connected || array() === $models ) : ?>
+				<p class="devbridge-ai-provider-magnitude-empty">
+					<?php esc_html_e( 'Connect to Magnitude and start at least one model to use the test playground.', 'devbridge-ai-provider-magnitude' ); ?>
+				</p>
+			<?php else : ?>
+				<label class="devbridge-ai-provider-magnitude-label" for="devbridge-playground-model">
+					<?php esc_html_e( 'Model', 'devbridge-ai-provider-magnitude' ); ?>
+				</label>
+				<select id="devbridge-playground-model" class="devbridge-ai-provider-magnitude-select">
+					<?php foreach ( $models as $model ) : ?>
+						<option value="<?php echo esc_attr( $model['id'] ); ?>">
+							<?php echo esc_html( $model['name'] ); ?> (<?php echo esc_html( $model['id'] ); ?>)
+						</option>
+					<?php endforeach; ?>
+				</select>
+
+				<details class="devbridge-playground-parameters">
+					<summary><?php esc_html_e( 'Generation Parameters', 'devbridge-ai-provider-magnitude' ); ?></summary>
+					<div class="devbridge-playground-controls-grid">
+						<label>
+							<?php esc_html_e( 'Temperature', 'devbridge-ai-provider-magnitude' ); ?> (<span id="temp-val">0.7</span>)
+							<input type="range" id="param-temp" min="0" max="2" step="0.1" value="0.7" />
+						</label>
+						<label>
+							<?php esc_html_e( 'Top P', 'devbridge-ai-provider-magnitude' ); ?> (<span id="topp-val">1.0</span>)
+							<input type="range" id="param-topp" min="0" max="1" step="0.05" value="1.0" />
+						</label>
+						<label>
+							<?php esc_html_e( 'Max Tokens', 'devbridge-ai-provider-magnitude' ); ?>
+							<input type="number" id="param-max-tokens" min="1" max="8192" value="1024" />
+						</label>
+					</div>
+				</details>
+
+				<label class="devbridge-ai-provider-magnitude-label" for="devbridge-playground-system">
+					<?php esc_html_e( 'System Instruction (optional)', 'devbridge-ai-provider-magnitude' ); ?>
+				</label>
+				<textarea id="devbridge-playground-system" class="devbridge-ai-provider-magnitude-textarea" rows="2" maxlength="5000" placeholder="<?php esc_attr_e( 'Optional behavior instruction...', 'devbridge-ai-provider-magnitude' ); ?>"></textarea>
+
+				<div id="devbridge-playground-history" class="devbridge-playground-history" aria-live="polite"></div>
+
+				<label class="devbridge-ai-provider-magnitude-label" for="devbridge-playground-prompt">
+					<?php esc_html_e( 'Your prompt', 'devbridge-ai-provider-magnitude' ); ?>
+				</label>
+				<textarea id="devbridge-playground-prompt" class="devbridge-ai-provider-magnitude-textarea" rows="3" maxlength="10000" placeholder="<?php esc_attr_e( 'Type your prompt here... (Press Ctrl+Enter or Cmd+Enter to send)', 'devbridge-ai-provider-magnitude' ); ?>" required></textarea>
+
+				<div class="devbridge-ai-provider-magnitude-playground-presets">
+					<button type="button" class="button button-secondary" data-preset="<?php esc_attr_e( 'Tell a one-sentence joke.', 'devbridge-ai-provider-magnitude' ); ?>">
+						<?php esc_html_e( '🃏 Joke', 'devbridge-ai-provider-magnitude' ); ?>
+					</button>
+					<button type="button" class="button button-secondary" data-preset="<?php esc_attr_e( 'Summarize WordPress in 3 sentences.', 'devbridge-ai-provider-magnitude' ); ?>">
+						<?php esc_html_e( '📝 Summarize WP', 'devbridge-ai-provider-magnitude' ); ?>
+					</button>
+					<button type="button" class="button button-secondary" data-preset="<?php esc_attr_e( 'Return a JSON object with keys "name" and "version" for WordPress.', 'devbridge-ai-provider-magnitude' ); ?>">
+						<?php esc_html_e( '{ } Return JSON', 'devbridge-ai-provider-magnitude' ); ?>
+					</button>
+				</div>
+
+				<div class="devbridge-playground-actions">
+					<button type="button" id="devbridge-playground-send" class="button button-primary">
+						<?php esc_html_e( 'Send prompt', 'devbridge-ai-provider-magnitude' ); ?>
+					</button>
+					<button type="button" id="devbridge-playground-stop" class="button button-secondary" hidden>
+						<?php esc_html_e( 'Stop', 'devbridge-ai-provider-magnitude' ); ?>
+					</button>
+					<span class="spinner" id="devbridge-playground-spinner"></span>
+				</div>
+
+				<div id="devbridge-playground-output" class="devbridge-ai-provider-magnitude-playground-output" hidden>
+					<div class="devbridge-ai-provider-magnitude-playground-stats">
+						<span class="devbridge-ai-provider-magnitude-stat" id="stat-latency"></span>
+						<span class="devbridge-ai-provider-magnitude-stat" id="stat-tokens"></span>
+						<span class="devbridge-ai-provider-magnitude-stat" id="stat-speed"></span>
+						<span class="devbridge-ai-provider-magnitude-stat" id="stat-cached" hidden>
+							<?php esc_html_e( 'Cached', 'devbridge-ai-provider-magnitude' ); ?>
+						</span>
+					</div>
+					<pre class="devbridge-ai-provider-magnitude-playground-content" id="devbridge-playground-content"></pre>
+				</div>
+			<?php endif; ?>
 		</section>
 		<?php
 	}

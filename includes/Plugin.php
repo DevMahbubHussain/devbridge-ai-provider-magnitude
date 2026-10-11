@@ -15,6 +15,11 @@ use DevBridgeAiProviderForMagnitude\Contracts\Hook_Registrar;
 use DevBridgeAiProviderForMagnitude\Host\Host_Resolver;
 use DevBridgeAiProviderForMagnitude\Http\Local_Host_Allowance;
 use DevBridgeAiProviderForMagnitude\Integration\Ai_Plugin_Credentials;
+use DevBridgeAiProviderForMagnitude\Playground\Playground_Cache;
+use DevBridgeAiProviderForMagnitude\Playground\Playground_Rate_Limiter;
+use DevBridgeAiProviderForMagnitude\Playground\Playground_Request_Validator;
+use DevBridgeAiProviderForMagnitude\Playground\Playground_Rest_Controller;
+use DevBridgeAiProviderForMagnitude\Playground\Registry_Playground_Invoker;
 use DevBridgeAiProviderForMagnitude\Provider\Provider_Registrar;
 use DevBridgeAiProviderForMagnitude\Settings\Host_Validator;
 use DevBridgeAiProviderForMagnitude\Settings\Settings_Page;
@@ -80,6 +85,13 @@ final class Plugin {
 			new Ai_Plugin_Credentials(),
 			new Settings_Registrar( new Settings_Page( $host, $inspector ), $validator, $inspector, $this->plugin_file ),
 			new Action_Links( $this->plugin_file ),
+			new Playground_Rest_Controller(
+				$inspector,
+				new Registry_Playground_Invoker(),
+				new Playground_Request_Validator(),
+				new Playground_Rate_Limiter(),
+				new Playground_Cache()
+			),
 		);
 	}
 }

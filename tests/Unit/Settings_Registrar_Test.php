@@ -53,8 +53,11 @@ final class Settings_Registrar_Test extends TestCase {
 	 * Resets the stand-ins after each test.
 	 */
 	protected function tearDown(): void {
-		$GLOBALS['devbridge_ai_magnitude_options']         = array();
-		$GLOBALS['devbridge_ai_magnitude_settings_errors'] = array();
+		$GLOBALS['devbridge_ai_magnitude_options']           = array();
+		$GLOBALS['devbridge_ai_magnitude_settings_errors']   = array();
+		$GLOBALS['devbridge_ai_magnitude_enqueued_styles']   = array();
+		$GLOBALS['devbridge_ai_magnitude_enqueued_scripts']  = array();
+		$GLOBALS['devbridge_ai_magnitude_localized_scripts'] = array();
 	}
 
 	public function test_valid_address_is_normalized(): void {
@@ -77,5 +80,27 @@ final class Settings_Registrar_Test extends TestCase {
 
 	public function test_invalid_address_without_a_saved_value_returns_empty(): void {
 		$this->assertSame( '', $this->registrar()->sanitize_host( 'javascript:alert(1)' ) );
+	}
+
+	public function test_enqueue_assets_on_settings_screen(): void {
+		$this->registrar()->enqueue_assets( 'settings_page_' . Settings_Page::SLUG );
+
+		$this->assertArrayHasKey( 'devbridge-ai-provider-magnitude-settings', $GLOBALS['devbridge_ai_magnitude_enqueued_styles'] );
+		$this->assertArrayHasKey( 'devbridge-ai-provider-magnitude-playground', $GLOBALS['devbridge_ai_magnitude_enqueued_scripts'] );
+		$this->assertArrayHasKey( 'devbridge-ai-provider-magnitude-playground', $GLOBALS['devbridge_ai_magnitude_localized_scripts'] );
+
+		$localized = $GLOBALS['devbridge_ai_magnitude_localized_scripts']['devbridge-ai-provider-magnitude-playground'];
+		$this->assertSame( 'devbridgeMagnitudePlayground', $localized['object_name'] );
+		$this->assertStringContainsString( 'devbridge-ai-provider-magnitude/v1/playground/generate', $localized['data']['restUrl'] );
+		$this->assertSame( 'test_nonce_mock', $localized['data']['nonce'] );
+		$this->assertArrayHasKey( 'send', $localized['data']['strings'] );
+		$this->assertArrayHasKey( 'cachedBadge', $localized['data']['strings'] );
+	}
+
+	public function test_enqueue_assets_on_different_screen_does_nothing(): void {
+		$this->registrar()->enqueue_assets( 'options-general.php' );
+
+		$this->assertSame( array(), $GLOBALS['devbridge_ai_magnitude_enqueued_styles'] );
+		$this->assertSame( array(), $GLOBALS['devbridge_ai_magnitude_enqueued_scripts'] );
 	}
 }
