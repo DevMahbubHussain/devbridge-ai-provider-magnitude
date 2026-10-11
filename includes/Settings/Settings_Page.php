@@ -113,7 +113,7 @@ final class Settings_Page {
 			<header class="devbridge-ai-provider-magnitude-header">
 				<h1><?php echo esc_html( get_admin_page_title() ); ?></h1>
 				<p class="devbridge-ai-provider-magnitude-intro">
-					<?php esc_html_e( 'Connect WordPress to Magnitude, an app that runs open-weight AI models on your own computer. Your prompts stay on your hardware.', 'devbridge-ai-provider-magnitude' ); ?>
+					<?php esc_html_e( 'Connect WordPress to Magnitude, an app that runs open-weight AI models. Your prompts go only to the address below.', 'devbridge-ai-provider-magnitude' ); ?>
 				</p>
 			</header>
 

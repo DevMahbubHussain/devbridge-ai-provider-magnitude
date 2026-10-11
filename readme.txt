@@ -47,9 +47,9 @@ This plugin is an independent project. It is not affiliated with, endorsed by, o
 
 This plugin connects to the Magnitude server whose address you set under Settings > Magnitude, or with the `DEVBRIDGE_AI_PROVIDER_MAGNITUDE_HOST` constant. By default that is `http://127.0.0.1:10100/inference`, a program you run yourself on the same computer.
 
-* **What is sent:** the prompts and context that other plugins send through the WordPress AI Client, requests for the list of models, and the API key if you entered one on Settings > Connectors.
-* **When:** only when a plugin uses the AI Client with Magnitude, and when an administrator opens Settings > Connectors or Settings > Magnitude or chooses Check connection. Nothing is sent when the plugin is activated or on the front end of your site.
-* **Where it goes:** only to the address you configured. This plugin sends no data to its author or to any other service.
+* **What is sent:** the prompts and context that other plugins send through the WordPress AI Client, test prompts sent from the Test Playground, requests for the list of models, and the API key if you entered one on Settings > Connectors.
+* **When:** only when a plugin uses the AI Client with Magnitude, when an administrator tests models in the Test Playground, and when an administrator opens Settings > Connectors or Settings > Magnitude or chooses Check connection. Nothing is sent when the plugin is activated or on the front end of your site.
+* **Where it goes:** only to the address you configured. Your prompts go only to that address. This plugin sends no data to its author or to any other third party.
 
 Magnitude is a separate program made by Magnitude AI Inc.: https://magnitude.dev/
 
@@ -96,6 +96,12 @@ Both run open-weight models on your own computer and both offer an OpenAI-compat
 = Which one should I use? =
 
 Use the one that matches the program you already run. If you need embeddings or image generation, choose the Ollama connector. If you use Magnitude, or want to try it, use this plugin.
+
+= What data does the Test Playground store? =
+
+* **Conversation history:** When testing models in the Test Playground on Settings > Magnitude, your multi-turn conversation thread is kept strictly in your own browser's local session storage (`sessionStorage`). It is never stored on the server or in the database. Choosing "Clear History" or closing the browser tab removes it immediately.
+* **Response cache:** Prompt completions are cached temporarily in WordPress transients on your server for up to 10 minutes to reduce local GPU and CPU load when testing. You can check "Bypass Cache" to skip cached results and generate fresh responses.
+* **Uninstall cleanup:** When the plugin is deleted, all saved options and temporary transients are completely purged from your database across single and multisite installs.
 
 = Is this plugin related to the Ollama connector? =
 
