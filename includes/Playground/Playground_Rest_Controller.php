@@ -254,7 +254,17 @@ final class Playground_Rest_Controller implements Hook_Registrar {
 				$messages,
 				$options,
 				static function ( string $delta ): void {
-					echo 'data: ' . wp_json_encode( array( 'delta' => $delta ) ) . "\n\n";
+					if ( function_exists( 'connection_aborted' ) && 1 === connection_aborted() ) {
+						return;
+					}
+
+					echo 'data: ' . wp_json_encode(
+						array(
+							'type'    => 'chunk',
+							'content' => $delta,
+							'delta'   => $delta,
+						)
+					) . "\n\n";
 					if ( function_exists( 'flush' ) ) {
 						flush();
 					}
@@ -263,7 +273,9 @@ final class Playground_Rest_Controller implements Hook_Registrar {
 		} catch ( Throwable $error ) {
 			echo 'data: ' . wp_json_encode(
 				array(
-					'error' => __( 'Magnitude did not answer. Check that the app is running.', 'devbridge-ai-provider-magnitude' ),
+					'type'    => 'error',
+					'message' => __( 'Magnitude did not answer. Check that the app is running.', 'devbridge-ai-provider-magnitude' ),
+					'error'   => __( 'Magnitude did not answer. Check that the app is running.', 'devbridge-ai-provider-magnitude' ),
 				)
 			) . "\n\n";
 			echo "data: [DONE]\n\n";
@@ -290,7 +302,13 @@ final class Playground_Rest_Controller implements Hook_Registrar {
 	private function emit_stream_response( Playground_Result $result, bool $cached ): void {
 		$this->send_stream_headers();
 
-		echo 'data: ' . wp_json_encode( array( 'delta' => $result->get_text() ) ) . "\n\n";
+		echo 'data: ' . wp_json_encode(
+			array(
+				'type'    => 'chunk',
+				'content' => $result->get_text(),
+				'delta'   => $result->get_text(),
+			)
+		) . "\n\n";
 		if ( function_exists( 'flush' ) ) {
 			flush();
 		}
@@ -308,6 +326,7 @@ final class Playground_Rest_Controller implements Hook_Registrar {
 	 */
 	private function emit_stream_final( Playground_Result $result, bool $cached ): void {
 		$data           = $result->to_array();
+		$data['type']   = 'done';
 		$data['cached'] = $cached;
 		$data['done']   = true;
 

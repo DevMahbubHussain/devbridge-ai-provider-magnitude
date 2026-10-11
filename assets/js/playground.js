@@ -414,8 +414,11 @@
 								continue;
 							}
 
-							if ( frame.type === 'chunk' && frame.content ) {
-								accumulatedText += frame.content;
+							const isChunk = ( frame.type === 'chunk' && frame.content !== undefined ) || frame.delta !== undefined;
+							const chunkContent = frame.content !== undefined ? frame.content : frame.delta;
+
+							if ( isChunk && chunkContent ) {
+								accumulatedText += chunkContent;
 								tokenCount++;
 
 								// Live update
@@ -426,10 +429,10 @@
 									const tokPerSec = ( tokenCount / elapsedSec ).toFixed( 1 );
 									statSpeed.textContent = `~${tokPerSec} tok/s`;
 								}
-							} else if ( frame.type === 'done' ) {
+							} else if ( frame.type === 'done' || frame.done ) {
 								updateTelemetryMetrics( frame );
-							} else if ( frame.type === 'error' ) {
-								throw new Error( frame.message || strings.errorGeneric );
+							} else if ( frame.type === 'error' || frame.error ) {
+								throw new Error( frame.message || frame.error || strings.errorGeneric );
 							}
 						}
 					}
